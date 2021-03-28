@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 tokio = { version = "*", features = ["full"] }
 log = "*"
-redis = "0.20.0"
+redis = "*"
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
 serde_json = "*"
 serde = {version = "*", features = ["derive"]}
