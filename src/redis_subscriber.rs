@@ -1,17 +1,17 @@
 extern crate redis;
 
 use std::error::Error;
-use redis::{Commands, ControlFlow, PubSubCommands};
+use redis::{ControlFlow, PubSubCommands};
 use crate::message::Message;
 use crate::message_handler;
 
-pub fn start_subscription(channel: String) -> Result<(), Box<dyn Error>> {
-    let _ = subscribe(channel);
+pub async fn start_subscription(channel: String) -> Result<(), Box<dyn Error>> {
+    let _ = subscribe(channel).await?;
     Ok(())
 }
 
-fn subscribe(channel: String) -> Result<(), Box<dyn Error>> {
-    tokio::spawn(async move {
+async fn subscribe(channel: String) -> Result<(), Box<dyn Error>> {
+    let _ = tokio::spawn(async move {
         let client = redis::Client::open("redis://localhost").unwrap();
         
         let mut con = client.get_connection().unwrap();
@@ -25,17 +25,6 @@ fn subscribe(channel: String) -> Result<(), Box<dyn Error>> {
             return ControlFlow::Continue;
         }).unwrap();
     });
-
-    Ok(())
-}
-
-pub fn publish_message(message: Message) -> Result<(), Box<dyn Error>> {
-    let client = redis::Client::open("redis://localhost/")?;
-    let mut con = client.get_connection().unwrap();
-
-    let json = serde_json::to_string(&message)?;
-
-    con.publish::<String, String, String>(message.channel, json)?;
 
     Ok(())
 }
