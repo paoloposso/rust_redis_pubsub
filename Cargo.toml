@@ -1,0 +1,15 @@
+[package]
+name = "event_redis"
+version = "0.1.0"
+authors = ["Paolo Posso <pvictorsys@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "*", features = ["full"] }
+log = "*"
+redis = "0.20.0"
+uuid = { version = "0.8.2", features = ["serde", "v4"] }
+serde_json = "*"
+serde = {version = "*", features = ["derive"]}
