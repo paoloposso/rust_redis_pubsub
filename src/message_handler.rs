@@ -1,5 +1,5 @@
 use crate::message::Message;
 
-pub fn handle(order: Message) {
-    println!("{:?}", order);
+pub fn handle(message: Message) {
+    println!("{:?}", message);
 }

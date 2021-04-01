@@ -5,12 +5,7 @@ use redis::{ControlFlow, PubSubCommands};
 use crate::message::Message;
 use crate::message_handler;
 
-pub async fn start_subscription(channel: String) -> Result<(), Box<dyn Error>> {
-    let _ = subscribe(channel).await?;
-    Ok(())
-}
-
-async fn subscribe(channel: String) -> Result<(), Box<dyn Error>> {
+pub fn subscribe(channel: String) -> Result<(), Box<dyn Error>> {
     let _ = tokio::spawn(async move {
         let client = redis::Client::open("redis://localhost").unwrap();
         

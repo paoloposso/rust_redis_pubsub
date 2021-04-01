@@ -9,7 +9,7 @@ extern crate redis;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("service started");
 
-    if let Err(error) = redis_subscriber::start_subscription(String::from("order")).await {
+    if let Err(error) = redis_subscriber::subscribe(String::from("order")) {
         println!("{:?}", error);
         panic!("{:?}", error);
     } else {
@@ -28,6 +28,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         message::Order::new("Milka Bar".to_string(), 
         10, 
         50.0)))?;
+    
+    println!("published");
 
     Ok(())
 }
